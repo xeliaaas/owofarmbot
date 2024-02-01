@@ -3,7 +3,7 @@ dWdnY2Y6Ly9iY3JhLmZjYmd2c2wucGJ6L2dlbnB4LzVwc2tIZ1B4Y3hQVkVlWGxxVVhGb1kgcm90MTM=
 
 If you make a video about using the farmbot, upload it to YouTube with the hashtag #thankumid0 and let me know.
 
-<h1 align="center">OwO Farm Bot V1.0.6.3 </h1>
+<h1 align="center">OwO Farm Bot V1.0.6.3</h1>
 
 <p align="center">
 
@@ -11,7 +11,7 @@ If you make a video about using the farmbot, upload it to YouTube with the hasht
 <a href="https://github.com/Mid0aria/owofarmbot"><img src="https://img.shields.io/github/last-commit/mid0aria/owofarmbot" /></a><br>
 Tutorial needed? <a href="https://youtu.be/sso05qx8Hac">Click Here</a><br>
 Tutorial 2 (replit) <a href="https://www.youtube.com/watch?v=tiSd99NEhb4">Click Here</a> (Thanks Hiếu LoneLy)<br>
-Do you want new feature? <a href ="https://github.com/Mid0aria/owofarmbot/issues/24">Click Me</a>
+Do you need help? <a href ="https://discord.gg/WzYXVbXt6C">Join Discord Server</a>
 
 </p>
 
@@ -133,7 +133,7 @@ Do you want new feature? <a href ="https://github.com/Mid0aria/owofarmbot/issues
         "animals": {
             "enable": "", true or false
             "type": "" sell or sacrifice
-            "ifsacrifice": {
+            "animaltype": {
                 "common": "", true or false
                 "uncommon": "", true or false
                 "rare": "", true or false

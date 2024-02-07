@@ -223,25 +223,13 @@ if (settings.discordrpc) {
         console.log(",..,");
     });
 }
-console.log(chalk.cyan("github.com/mid0aria"));
-console.log(chalk.cyan("Made with love for e <3"));
 
-if (settings.huntandbattle) {
-    console.log(
-        chalk.magenta("OwO Farm Bot Started ") +
-            chalk.blue(`version ${version}`)
-    );
-} else {
-    console.log(
-        chalk.red(
-            "Hunt and Battle disabled!!! If you want to use the bot, activate it from the config.json file. "
-        )
-    );
-    updateerrorsocket(
-        "Hunt and Battle disabled!!! If you want to use the bot, activate it from the config.json file. "
-    );
-    process.exit(0);
-}
+console.log(
+    chalk.cyan("github.com/mid0aria\n") +
+        chalk.cyan("Made with love for e<3\n") +
+        chalk.magenta("OwO Farm Bot Started") +
+        chalk.blue(` version ${version}`)
+);
 
 if (settings.banbypass) {
     global.mainbanc = false;
@@ -288,7 +276,7 @@ request.get(
             checklist(maintoken, "Main Token", mainchannelid);
             sleepy("Main", "CheckList");
 
-            setTimeout(() => {
+            /*setTimeout(() => {
                 if (settings.huntandbattle) {
                     setTimeout(() => {
                         hunt(maintoken, "StartUp", "Main Token", mainchannelid);
@@ -328,7 +316,7 @@ request.get(
                         upgradeall(maintoken, "Main Token", mainchannelid);
                     }, 17000);
                 }
-            }, 5000);
+            }, 5000);*/
         }
     }
 );
@@ -364,6 +352,7 @@ if (extratokencheck) {
                             sleepy("Extra", "CheckList");
                         }, 5000);
                     }, 3500);
+                    /*
                     if (settings.huntandbattle) {
                         setTimeout(() => {
                             hunt(
@@ -412,7 +401,7 @@ if (extratokencheck) {
                                 extrachannelid
                             );
                         }, 17000);
-                    }
+                    }*/
                 }
             }
         }

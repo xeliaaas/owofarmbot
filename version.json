@@ -1,5 +1,5 @@
 {
-    "version": "1.0.6.3",
+    "version": "1.0.6.4",
     "updater": "0.0.3",
-    "note": "fixed 401 unauthorized bug & added typing indicator"
+    "note": "V1.0.6.4: minor fix applied to captcha check"
 }

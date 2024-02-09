@@ -1,5 +1,10 @@
-node_modules
-package-lock.json
+node_modules/
+.github/
+images/
 .env
 test.js
 captcha_trainerv1.js
+blank.js
+config.json
+package-lock.json
+version

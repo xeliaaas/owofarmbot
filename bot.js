@@ -52,7 +52,7 @@ let extraautoquestchannelid = config.extra.autoquestchannelid;
 let maingamblechannelid = config.main.gamblechannelid;
 let extragamblechannelid = config.extra.gamblechannelid;
 
-var version = "1.0.6.4";
+var version = "1.0.6.5";
 var banversion = "0.1.8";
 
 global.quest = true;
@@ -60,6 +60,8 @@ global.questtitle = "";
 
 console.clear();
 process.title = `OwO Farm Bot 💗 Bot Version ${version} / BanBypass Version ${banversion} 💗`;
+
+checkversion();
 
 process.on("SIGINT", function () {
     console.log(chalk.yellow("CTRL + C detected..."));
@@ -213,7 +215,6 @@ if (extratokencheck) {
     }
 }
 
-checkversion();
 //E <3
 
 DiscordRPC.register(rpcclientid);
@@ -352,8 +353,8 @@ if (extratokencheck) {
                             sleepy("Extra", "CheckList");
                         }, 5000);
                     }, 3500);
-                    /*
-                    if (settings.huntandbattle) {
+
+                    /*if (settings.huntandbattle) {
                         setTimeout(() => {
                             hunt(
                                 extratoken,
@@ -570,6 +571,8 @@ if (settings.upgradeautohunt.enable) {
 }
 
 //--------------------------------GAMBLE-------------------------------------------------//
+
+/*
 if (settings.times.intervals.gamble.enable) {
     var timegamblecoinflipinterval =
         settings.times.intervals.gamble.coinflip.time;
@@ -595,6 +598,7 @@ if (settings.gamble.slots.enable) {
         }
     }, timegambleslotsinterval);
 }
+*/
 //----------------------------------------------------FUNCTIONS----------------------------------------------------//
 
 function checkversion() {

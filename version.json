@@ -1,5 +1,5 @@
 {
-    "version": "1.0.6.4",
+    "version": "1.0.6.5",
     "updater": "0.0.3",
-    "note": "V1.0.6.4: minor fix applied to captcha check"
+    "note": "V1.0.6.5: Gambling functions have been temporarily disabled due to problems."
 }

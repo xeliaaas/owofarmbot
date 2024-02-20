@@ -56,7 +56,7 @@ if (prefix == (null || undefined || "")) {
     prefix = "owo";
 }
 
-var version = "1.0.6.5";
+var version = "1.0.6.6";
 var banversion = "0.1.9";
 
 global.quest = true;

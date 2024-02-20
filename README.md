@@ -3,7 +3,7 @@ dWdnY2Y6Ly9iY3JhLmZjYmd2c2wucGJ6L2dlbnB4LzVwc2tIZ1B4Y3hQVkVlWGxxVVhGb1kgcm90MTM=
 
 If you make a video about using the farmbot, upload it to YouTube with the hashtag #thankumid0 and let me know.
 
-<h1 align="center">OwO Farm Bot V1.0.6.3</h1>
+<h1 align="center">OwO Farm Bot V1.0.6.6</h1>
 
 <p align="center">
 
@@ -75,6 +75,7 @@ Do you need help? <a href ="https://discord.gg/WzYXVbXt6C">Join Discord Server</
 
 ```
 {
+    "windowssettings": { "controlcdetect": false },
     "settings": {
         "times": {
             "enable": "", true or false
@@ -115,6 +116,7 @@ Do you need help? <a href ="https://discord.gg/WzYXVbXt6C">Join Discord Server</
                 }
             }
         },
+        "prefix": "", owo bot's prefix on your server
         "huntandbattle": "", true or false
         "banbypass": "", true or false
         "discordrpc": "", true or false

@@ -1,4 +1,4 @@
-global.love = "e<3";
+global.love = "e<3"; // 💔
 //coded by @mid0aria on github
 const os = require("os");
 if (os.userInfo().username === "DESKTOP-3VVC3") {
@@ -51,25 +51,30 @@ let mainautoquestchannelid = config.main.autoquestchannelid;
 let extraautoquestchannelid = config.extra.autoquestchannelid;
 let maingamblechannelid = config.main.gamblechannelid;
 let extragamblechannelid = config.extra.gamblechannelid;
+let prefix = settings.prefix;
+if (prefix == (null || undefined || "")) {
+    prefix = "owo";
+}
 
 var version = "1.0.6.5";
-var banversion = "0.1.8";
+var banversion = "0.1.9";
 
 global.quest = true;
 global.questtitle = "";
 
-console.clear();
+//console.clear();
 process.title = `OwO Farm Bot 💗 Bot Version ${version} / BanBypass Version ${banversion} 💗`;
 
 checkversion();
 
-process.on("SIGINT", function () {
-    console.log(chalk.yellow("CTRL + C detected..."));
-    console.log(chalk.red("killing socket client"));
-    cp.exec("taskkill /f /im cmd.exe");
-    cp.exec("taskkill /f /im windowsterminal.exe");
-});
-
+if (config.windowssettings.controlcdetectec) {
+    process.on("SIGINT", function () {
+        console.log(chalk.yellow("CTRL + C detected..."));
+        console.log(chalk.red("killing socket client"));
+        cp.exec("taskkill /f /im cmd.exe");
+        cp.exec("taskkill /f /im windowsterminal.exe");
+    });
+}
 var asciieye = `
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⣤⣤⣤⣤⣤⣤⣄⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠛⠻⠿⢿⣿⣿⣿⣿⣿⣶⣤⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -181,34 +186,34 @@ if (extratoken === maintoken) {
     extratokencheck = false;
 }
 
-if (mainchannelid.length < 1) {
+if (mainchannelid.lenght == 0) {
     console.log(chalk.red("Main Token Channel ID ❌"));
 
     process.exit(0);
 }
-if (maintokenuserid.length < 1) {
+if (maintokenuserid.lenght == 0) {
     console.log(chalk.red("Main Token User ID ❌"));
 
     process.exit(0);
 }
-if (owodmmainchannelid.length < 1) {
+if (owodmmainchannelid.lenght == 0) {
     console.log(chalk.red("Main Token OwO DM Channel ID ❌"));
 
     process.exit(0);
 }
 
 if (extratokencheck) {
-    if (extrachannelid.length < 1) {
+    if (extrachannelid.lenght == 0) {
         console.log(chalk.red("Extra Token Channel ID ❌"));
 
         process.exit(0);
     }
-    if (extratokenuserid.length < 1) {
+    if (extratokenuserid.lenght == 0) {
         console.log(chalk.red("Extra Token User ID ❌"));
 
         process.exit(0);
     }
-    if (owodmextrachannelid.length < 1) {
+    if (owodmextrachannelid.lenght == 0) {
         console.log(chalk.red("Extra Token OwO DM Channel ID ❌"));
 
         process.exit(0);
@@ -411,7 +416,7 @@ if (extratokencheck) {
     global.etoken = false;
 }
 //--------------------------HUNT BATTLE-------------------------------------------------------//
-if (settings.times.intervals.huntbattle.enable) {
+if (settings.times.enable) {
     var timehuntbattleinterval = settings.times.intervals.huntbattle.time;
 } else {
     var timehuntbattleinterval = 17000;
@@ -432,9 +437,6 @@ setInterval(() => {
             Math.random() * (bigger_timebattle - smaller_timebattle + 1) +
                 smaller_timebattle
         );
-
-        // Adding random because OwO will send captcha every 10 commands without this. They know that no "normal" user should able to send message with exact same time.
-        // Tried for some days and not receive any captcha check.
     } else {
         var timehunt = parseInt(rantime());
         if (timehunt <= 6000) {
@@ -448,28 +450,40 @@ setInterval(() => {
         dmbancheck(maintoken, owodmmainchannelid);
     }
     if (settings.huntandbattle) {
-        if (global.mainbanc) {
+        // if (global.mainbanc) {
+        hunt(maintoken, timehunt, "Main Token", mainchannelid);
+        if (settings.inventory.inventorycheck) {
             setTimeout(() => {
-                hunt(maintoken, timehunt, "Main Token", mainchannelid);
-                if (settings.inventory.inventorycheck) {
-                    setTimeout(() => {
-                        checkinv(maintoken, mainchannelid, "Main Token");
-                    }, 2500);
-                }
-            }, timehunt);
-
-            setTimeout(() => {
-                battle(maintoken, timebattle, "Main Token", mainchannelid);
-            }, timebattle);
+                checkinv(maintoken, mainchannelid, "Main Token");
+            }, 2500);
         }
+        // }
+        setTimeout(() => {
+            if (settings.banbypass) {
+                bancheck(maintoken, mainchannelid);
+                dmbancheck(maintoken, owodmmainchannelid);
+            }
+            battle(maintoken, timebattle, "Main Token", mainchannelid);
+        }, timebattle);
     }
 }, timehuntbattleinterval);
 
 if (global.etoken) {
     setInterval(() => {
         if (settings.times.enable) {
-            var timehunt = settings.times.hunt;
-            var timebattle = settings.times.battle;
+            var smaller_timehunt = settings.times.huntbottom;
+            var bigger_timehunt = settings.times.hunttop;
+            var timehunt = Math.floor(
+                Math.random() * (bigger_timehunt - smaller_timehunt + 1) +
+                    smaller_timehunt
+            );
+
+            var smaller_timebattle = settings.times.battlebottom;
+            var bigger_timebattle = settings.times.battletop;
+            var timebattle = Math.floor(
+                Math.random() * (bigger_timebattle - smaller_timebattle + 1) +
+                    smaller_timebattle
+            );
         } else {
             var timehunt = parseInt(rantime());
             if (timehunt <= 6000) {
@@ -478,32 +492,26 @@ if (global.etoken) {
             var timebattle = timehunt + 1000;
         }
 
-        var timebattle = timehunt + 1000;
         if (settings.banbypass) {
-            extrabancheck(extratoken, extrachannelid);
-            dmextrabancheck(extratoken, owodmextrachannelid);
+            bancheck(extratoken, extrachannelid);
+            dmbancheck(extratoken, owodmextrachannelid);
         }
         if (settings.huntandbattle) {
-            if (global.extrabanc) {
+            // if (global.mainbanc) {
+            hunt(extratoken, timehunt, "Main Token", extrachannelid);
+            if (settings.inventory.inventorycheck) {
                 setTimeout(() => {
-                    hunt(extratoken, timehunt, "Extra Token", extrachannelid);
-                    if (settings.inventory.inventorycheck) {
-                        setTimeout(() => {
-                            checkinv(extratoken, extrachannelid, "Extra Token");
-                        }, 2500);
-                    } //E <3
-                }, timehunt);
-
-                setTimeout(() => {
-                    battle(
-                        extratoken,
-
-                        timebattle,
-                        "Extra Token",
-                        extrachannelid
-                    );
-                }, timebattle);
+                    checkinv(extratoken, extrachannelid, "Main Token");
+                }, 2500);
             }
+            // }
+            setTimeout(() => {
+                if (settings.banbypass) {
+                    bancheck(extratoken, extrachannelid);
+                    dmbancheck(extratoken, owodmextrachannelid);
+                }
+                battle(extratoken, timebattle, "Main Token", extrachannelid);
+            }, timebattle);
         }
     }, timehuntbattleinterval);
 }
@@ -513,10 +521,19 @@ if (settings.times.intervals.animals.enable) {
 } else {
     var timeanimalsinterval = 1200000;
 }
+
 if (settings.animals.enable) {
     setInterval(() => {
+        if (settings.banbypass) {
+            bancheck(maintoken, mainchannelid);
+            dmbancheck(maintoken, owodmmainchannelid);
+        }
         animals(maintoken, "Main Token", mainchannelid, settings.animals.type);
         if (global.etoken) {
+            if (settings.banbypass) {
+                bancheck(maintoken, mainchannelid);
+                dmbancheck(maintoken, owodmmainchannelid);
+            }
             animals(
                 extratoken,
                 "Extra Token",
@@ -535,8 +552,16 @@ if (settings.times.intervals.pray.enable) {
 }
 if (settings.pray) {
     setInterval(() => {
+        if (settings.banbypass) {
+            bancheck(maintoken, mainchannelid);
+            dmbancheck(maintoken, owodmmainchannelid);
+        }
         pray(maintoken, "Main Token", mainchannelid);
         if (global.etoken) {
+            if (settings.banbypass) {
+                bancheck(maintoken, mainchannelid);
+                dmbancheck(maintoken, owodmmainchannelid);
+            }
             pray(extratoken, "Extra Token", extrachannelid);
         }
     }, timeprayinterval);
@@ -549,8 +574,16 @@ if (settings.times.intervals.curse.enable) {
 }
 if (settings.curse) {
     setInterval(() => {
+        if (settings.banbypass) {
+            bancheck(maintoken, mainchannelid);
+            dmbancheck(maintoken, owodmmainchannelid);
+        }
         curse(maintoken, "Main Token", mainchannelid);
         if (global.etoken) {
+            if (settings.banbypass) {
+                bancheck(maintoken, mainchannelid);
+                dmbancheck(maintoken, owodmmainchannelid);
+            }
             curse(extratoken, "Extra Token", extrachannelid);
         }
     }, timecurseinterval);
@@ -563,8 +596,16 @@ if (settings.times.intervals.upgrade.enable) {
 }
 if (settings.upgradeautohunt.enable) {
     setInterval(() => {
+        if (settings.banbypass) {
+            bancheck(maintoken, mainchannelid);
+            dmbancheck(maintoken, owodmmainchannelid);
+        }
         upgradeall(maintoken, "Main Token", mainchannelid);
         if (global.etoken) {
+            if (settings.banbypass) {
+                bancheck(maintoken, mainchannelid);
+                dmbancheck(maintoken, owodmmainchannelid);
+            }
             upgradeall(extratoken, "Extra Token", extrachannelid);
         }
     }, timeupgradeinterval);
@@ -572,7 +613,6 @@ if (settings.upgradeautohunt.enable) {
 
 //--------------------------------GAMBLE-------------------------------------------------//
 
-/*
 if (settings.times.intervals.gamble.enable) {
     var timegamblecoinflipinterval =
         settings.times.intervals.gamble.coinflip.time;
@@ -583,8 +623,16 @@ if (settings.times.intervals.gamble.enable) {
 }
 if (settings.gamble.coinflip.enable) {
     setInterval(() => {
+        if (settings.banbypass) {
+            bancheck(maintoken, mainchannelid);
+            dmbancheck(maintoken, owodmmainchannelid);
+        }
         coinflip(maintoken, "Main Token", maingamblechannelid);
         if (global.etoken) {
+            if (settings.banbypass) {
+                bancheck(maintoken, mainchannelid);
+                dmbancheck(maintoken, owodmmainchannelid);
+            }
             extra_coinflip(extratoken, "Extra Token", extragamblechannelid);
         }
     }, timegamblecoinflipinterval);
@@ -592,13 +640,21 @@ if (settings.gamble.coinflip.enable) {
 
 if (settings.gamble.slots.enable) {
     setInterval(() => {
+        if (settings.banbypass) {
+            bancheck(maintoken, mainchannelid);
+            dmbancheck(maintoken, owodmmainchannelid);
+        }
         slots(maintoken, "Main Token", maingamblechannelid);
         if (global.etoken) {
+            if (settings.banbypass) {
+                bancheck(maintoken, mainchannelid);
+                dmbancheck(maintoken, owodmmainchannelid);
+            }
             slots(extratoken, "Extra Token", extragamblechannelid);
         }
     }, timegambleslotsinterval);
 }
-*/
+
 //----------------------------------------------------FUNCTIONS----------------------------------------------------//
 
 function checkversion() {
@@ -756,7 +812,7 @@ function hunt(token, timehunt, tokentype, channelid) {
             url: `https://discord.com/api/v9/channels/${channelid}/messages`,
 
             json: {
-                content: "owo hunt",
+                content: `${prefix} hunt`,
                 nonce: nonce(),
                 tts: false,
                 flags: 0,
@@ -783,7 +839,7 @@ function battle(token, timebattle, tokentype, channelid) {
             },
             url: `https://discord.com/api/v9/channels/${channelid}/messages`,
             json: {
-                content: "owo battle",
+                content: `${prefix} battle`,
                 nonce: nonce(),
                 tts: false,
                 flags: 0,
@@ -863,9 +919,9 @@ function animals(token, tokentype, channelid, type) {
 
 function pray(token, tokentype, channelid) {
     if (tokentype == "Extra Token") {
-        var ct = `owo pray <@${maintokenuserid}>`;
+        var ct = `${prefix} pray <@${maintokenuserid}>`;
     } else {
-        var ct = "owo pray";
+        var ct = `${prefix} pray`;
     }
     typing(token, channelid);
     request.post(
@@ -895,9 +951,9 @@ function pray(token, tokentype, channelid) {
 
 function curse(token, tokentype, channelid) {
     if (tokentype == "Extra Token") {
-        var ct = `owo curse <@${maintokenuserid}>`;
+        var ct = `${prefix} curse <@${maintokenuserid}>`;
     } else {
-        var ct = "owo curse";
+        var ct = `${prefix} curse `;
     }
     typing(token, channelid);
     request.post(
@@ -934,7 +990,7 @@ function checklist(token, tokentype, channelid) {
             },
             url: `https://discord.com/api/v9/channels/${channelid}/messages`,
             json: {
-                content: "owo cl",
+                content: `${prefix} cl`,
                 nonce: nonce(),
                 tts: false,
                 flags: 0,
@@ -1035,7 +1091,7 @@ function daily(token, tokentype, channelid) {
             },
             url: `https://discord.com/api/v9/channels/${channelid}/messages`,
             json: {
-                content: "owo daily",
+                content: `${prefix} daily`,
                 nonce: nonce(),
                 tts: false,
                 flags: 0,
@@ -1063,7 +1119,7 @@ function cookie(token, tokentype, channelid) {
             },
             url: `https://discord.com/api/v9/channels/${channelid}/messages`,
             json: {
-                content: "owo cookie <@408785106942164992>",
+                content: `${prefix} cookie <@408785106942164992>`,
                 nonce: nonce(),
                 tts: false,
                 flags: 0,
@@ -1427,326 +1483,6 @@ function upgradeall(token, tokentype, channelid) {
         }
     );
 }
-//----------------------------------------------------BanCheck + Similar Bypass----------------------------------------------------//
-
-function bancheck(token, channelid) {
-    request.get(
-        {
-            headers: {
-                authorization: token,
-            },
-            url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=1`,
-        },
-        function (error, response, body) {
-            var bod = JSON.parse(body);
-            if (!bod[0]) return;
-            var cont = bod[0].content;
-
-            if (
-                cont.toLowerCase().includes("captcha") ||
-                cont
-                    .toLowerCase()
-                    .includes(
-                        "please complete your captcha to verify that you are human!"
-                    )
-            ) {
-                global.mainbanc = false;
-                console.clear();
-                console.log(
-                    chalk.red(
-                        `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
-                    ) +
-                        chalk.magenta(" [Main Token]") +
-                        chalk.red(" Chat Captcha! ❌")
-                );
-                notifier.notify({
-                    title: "(Main Token) Captcha Detected!",
-                    message: "Solve the captcha and restart the bot!",
-                    icon: "./utils/captcha.png",
-                    sound: true,
-                    wait: true,
-                    appID: "OwO Farm Bot",
-                });
-
-                setTimeout(() => {
-                    updateerrorsocket("(Main Token) Solve Captcha!");
-                    process.exit(0);
-                }, 1500);
-            } else {
-                global.mainbanc = true;
-                elaina2(token, channelid);
-                console.log(
-                    chalk.red(
-                        `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
-                    ) +
-                        chalk.magenta(" [Main Token]") +
-                        chalk.green(" Chat Captcha Checked ✅")
-                );
-                setTimeout(() => {
-                    sleepy("Main", "Chat Captcha");
-                }, 5000);
-            }
-        }
-    );
-}
-
-function extrabancheck(token, channelid) {
-    request.get(
-        {
-            headers: {
-                authorization: token,
-            },
-            url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=1`,
-        },
-        function (error, response, body) {
-            var bod = JSON.parse(body);
-            if (!bod[0]) return;
-            var cont = bod[0].content;
-            if (
-                cont.toLowerCase().includes("captcha") ||
-                cont
-                    .toLowerCase()
-                    .includes(
-                        "please complete your captcha to verify that you are human!"
-                    )
-            ) {
-                global.extrabanc = false;
-                console.clear();
-                console.log(
-                    chalk.red(
-                        `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
-                    ) +
-                        chalk.magenta(" [Extra Token]") +
-                        chalk.red(" Chat Captcha! ❌")
-                );
-                notifier.notify({
-                    title: "(Extra Token) Captcha Detected!",
-                    message: "Solve the captcha and restart the bot!",
-                    icon: "./utils/captcha.png",
-                    sound: true,
-                    wait: true,
-                    appID: "OwO Farm Bot",
-                });
-
-                setTimeout(() => {
-                    updateerrorsocket("(Extra Token) Solve Captcha!");
-                    process.exit(0);
-                }, 1500);
-            } else {
-                global.extrabanc = true;
-                elaina2(token, channelid);
-                console.log(
-                    chalk.red(
-                        `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
-                    ) +
-                        chalk.magenta(" [Extra Token]") +
-                        chalk.green(" Chat Captcha Checked ✅")
-                );
-                setTimeout(() => {
-                    sleepy("Extra", "Chat Captcha");
-                }, 5000);
-            }
-        }
-    );
-}
-
-function dmbancheck(token, channelid) {
-    request.get(
-        {
-            headers: {
-                authorization: token,
-            },
-            url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=1`,
-        },
-        function (error, response, body) {
-            var bod = JSON.parse(body);
-            if (bod[0] == undefined) {
-                dmprotectprouwu(token, channelid, "Main Token");
-            } else {
-                var cont = bod[0].content;
-
-                if (
-                    cont.toLowerCase().includes("are you a real human?") ||
-                    cont
-                        .toLowerCase()
-                        .includes(
-                            "please complete your captcha to verify that you are human!"
-                        )
-                ) {
-                    global.mainbanc = false;
-                    console.clear();
-                    console.log(
-                        chalk.red(
-                            `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
-                        ) +
-                            chalk.magenta(" [Main Token]") +
-                            chalk.red(" DM Captcha! ❌")
-                    );
-                    notifier.notify({
-                        title: "(Main Token) Captcha Detected!",
-                        message: "Solve the captcha and restart the bot!",
-                        icon: "./utils/captcha.png",
-                        sound: true,
-                        wait: true,
-                        appID: "OwO Farm Bot",
-                    });
-
-                    setTimeout(() => {
-                        updateerrorsocket("(Main Token) Solve DM Captcha!");
-                        process.exit(0);
-                    }, 1500);
-                } else {
-                    global.mainbanc = true;
-                    console.log(
-                        chalk.red(
-                            `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
-                        ) +
-                            chalk.magenta(" [Main Token]") +
-                            chalk.green(" DM Captcha Checked ✅")
-                    );
-
-                    setTimeout(() => {
-                        sleepy("Main", "Dm Captcha");
-                    }, 2000);
-                }
-            }
-        }
-    );
-}
-
-function dmextrabancheck(token, channelid) {
-    request.get(
-        {
-            headers: {
-                authorization: token,
-            },
-            url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=1`,
-        },
-        function (error, response, body) {
-            var bod = JSON.parse(body);
-            if (bod[0] == undefined) {
-                dmprotectprouwu(token, channelid, "Extra Token");
-            } else {
-                var cont = bod[0].content;
-                if (
-                    cont.toLowerCase().includes("are you a real human?") ||
-                    cont
-                        .toLowerCase()
-                        .includes(
-                            "please complete your captcha to verify that you are human!"
-                        )
-                ) {
-                    global.extrabanc = false;
-                    console.clear();
-                    console.log(
-                        chalk.red(
-                            `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
-                        ) +
-                            chalk.magenta(" [Extra Token]") +
-                            chalk.red(" DM Captcha! ❌")
-                    );
-                    notifier.notify({
-                        title: "(Extra Token) Captcha Detected!",
-                        message: "Solve the captcha and restart the bot!",
-                        icon: "./utils/captcha.png",
-                        sound: true,
-                        wait: true,
-                        appID: "OwO Farm Bot",
-                    });
-
-                    setTimeout(() => {
-                        updateerrorsocket("(Extra Token) Solve DM Captcha!");
-                        process.exit(0);
-                    }, 1500);
-                } else {
-                    global.extrabanc = true;
-                    console.log(
-                        chalk.red(
-                            `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
-                        ) +
-                            chalk.magenta(" [Extra Token]") +
-                            chalk.green(" DM Captcha Checked ✅")
-                    );
-                    setTimeout(() => {
-                        sleepy("Extra", "DM Captcha");
-                    }, 2000);
-                }
-            }
-        }
-    );
-}
-
-function dmprotectprouwu(token, channelid, tokentype) {
-    typing(token, channelid);
-    request.post(
-        {
-            headers: {
-                authorization: token,
-                "super-x": autoseed(token),
-            },
-            url: `https://discord.com/api/v9/channels/${channelid}/messages`,
-            json: {
-                content: "hi bro",
-                nonce: nonce(),
-                tts: false,
-                flags: 0,
-            },
-        },
-        function (err, res, body) {
-            if (body) {
-                console.log(
-                    chalk.red(
-                        `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
-                    ) +
-                        chalk.magenta(` [${tokentype}]`) +
-                        chalk.red(" OwO dm channel id incorrect ❌")
-                );
-            }
-        }
-    );
-}
-
-function elaina2(token, channelid, phrasesFilePath) {
-    // Read the JSON
-    fs.readFile("./phrases/phrases.json", "utf8", (err, data) => {
-        if (err) {
-            console.error("Error reading JSON file:", err);
-            return;
-        }
-
-        // Parse the JSON data
-        try {
-            const phrasesObject = JSON.parse(data);
-            const phrases = phrasesObject.phrases;
-
-            if (!phrases || !phrases.length) {
-                console.log("Phrases array is undefined or empty.");
-                return;
-            }
-
-            let result = Math.floor(Math.random() * phrases.length);
-
-            var ilu = phrases[result];
-            //E <3
-            typing(token, channelid);
-            request.post({
-                headers: {
-                    authorization: token,
-                },
-                url: `https://discord.com/api/v9/channels/${channelid}/messages`,
-
-                json: {
-                    content: ilu,
-                    nonce: nonce(),
-                    tts: false,
-                    flags: 0,
-                },
-            });
-        } catch (error) {
-            console.error("Error parsing JSON:", error);
-        }
-    });
-}
 
 //----------------------------------------------------Inventory----------------------------------------------------//
 
@@ -1830,7 +1566,7 @@ function getinv(token, channelid, tokentype, gemc, collectc) {
             },
             url: `https://discord.com/api/v9/channels/${channelid}/messages`,
             json: {
-                content: "owo inv",
+                content: `${prefix} inv`,
                 nonce: nonce(),
                 tts: false,
                 flags: 0,
@@ -2185,7 +1921,7 @@ async function getquests(token, channelid, tokentype) {
             },
             url: `https://discord.com/api/v9/channels/${channelid}/messages`,
             json: {
-                content: "owo quest",
+                content: `${prefix} quest`,
                 nonce: nonce(),
                 tts: false,
                 flags: 0,
@@ -2590,4 +2326,325 @@ async function questuseactioncommand(token, userid, channelid, pro1, pro2) {
     }
     global.quest = true;
     getquests(token, channelid);
+}
+
+//----------------------------------------------------BanCheck + Similar Bypass----------------------------------------------------//
+
+function bancheck(token, channelid) {
+    request.get(
+        {
+            headers: {
+                authorization: token,
+            },
+            url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=1`,
+        },
+        function (error, response, body) {
+            var bod = JSON.parse(body);
+            if (!bod[0]) return;
+            var cont = bod[0].content;
+
+            if (
+                cont.toLowerCase().includes("captcha") ||
+                cont
+                    .toLowerCase()
+                    .includes(
+                        "please complete your captcha to verify that you are human!"
+                    )
+            ) {
+                global.mainbanc = false;
+                console.clear();
+                console.log(
+                    chalk.red(
+                        `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
+                    ) +
+                        chalk.magenta(" [Main Token]") +
+                        chalk.red(" Chat Captcha! ❌")
+                );
+                notifier.notify({
+                    title: "(Main Token) Captcha Detected!",
+                    message: "Solve the captcha and restart the bot!",
+                    icon: "./utils/captcha.png",
+                    sound: true,
+                    wait: true,
+                    appID: "OwO Farm Bot",
+                });
+
+                setTimeout(() => {
+                    updateerrorsocket("(Main Token) Solve Captcha!");
+                    process.exit(0);
+                }, 1500);
+            } else {
+                global.mainbanc = true;
+                elaina2(token, channelid);
+                console.log(
+                    chalk.red(
+                        `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
+                    ) +
+                        chalk.magenta(" [Main Token]") +
+                        chalk.green(" Chat Captcha Checked ✅")
+                );
+                setTimeout(() => {
+                    sleepy("Main", "Chat Captcha");
+                }, 5000);
+            }
+        }
+    );
+}
+
+function extrabancheck(token, channelid) {
+    request.get(
+        {
+            headers: {
+                authorization: token,
+            },
+            url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=1`,
+        },
+        function (error, response, body) {
+            var bod = JSON.parse(body);
+            if (!bod[0]) return;
+            var cont = bod[0].content;
+            if (
+                cont.toLowerCase().includes("captcha") ||
+                cont
+                    .toLowerCase()
+                    .includes(
+                        "please complete your captcha to verify that you are human!"
+                    )
+            ) {
+                global.extrabanc = false;
+                console.clear();
+                console.log(
+                    chalk.red(
+                        `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
+                    ) +
+                        chalk.magenta(" [Extra Token]") +
+                        chalk.red(" Chat Captcha! ❌")
+                );
+                notifier.notify({
+                    title: "(Extra Token) Captcha Detected!",
+                    message: "Solve the captcha and restart the bot!",
+                    icon: "./utils/captcha.png",
+                    sound: true,
+                    wait: true,
+                    appID: "OwO Farm Bot",
+                });
+
+                setTimeout(() => {
+                    updateerrorsocket("(Extra Token) Solve Captcha!");
+                    process.exit(0);
+                }, 1500);
+            } else {
+                global.extrabanc = true;
+                elaina2(token, channelid);
+                console.log(
+                    chalk.red(
+                        `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
+                    ) +
+                        chalk.magenta(" [Extra Token]") +
+                        chalk.green(" Chat Captcha Checked ✅")
+                );
+                setTimeout(() => {
+                    sleepy("Extra", "Chat Captcha");
+                }, 5000);
+            }
+        }
+    );
+}
+
+function dmbancheck(token, channelid) {
+    request.get(
+        {
+            headers: {
+                authorization: token,
+            },
+            url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=1`,
+        },
+        function (error, response, body) {
+            var bod = JSON.parse(body);
+            if (bod[0] == undefined) {
+                dmprotectprouwu(token, channelid, "Main Token");
+            } else {
+                var cont = bod[0].content;
+
+                if (
+                    cont.toLowerCase().includes("are you a real human?") ||
+                    cont
+                        .toLowerCase()
+                        .includes(
+                            "please complete your captcha to verify that you are human!"
+                        )
+                ) {
+                    global.mainbanc = false;
+                    console.clear();
+                    console.log(
+                        chalk.red(
+                            `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
+                        ) +
+                            chalk.magenta(" [Main Token]") +
+                            chalk.red(" DM Captcha! ❌")
+                    );
+                    notifier.notify({
+                        title: "(Main Token) Captcha Detected!",
+                        message: "Solve the captcha and restart the bot!",
+                        icon: "./utils/captcha.png",
+                        sound: true,
+                        wait: true,
+                        appID: "OwO Farm Bot",
+                    });
+
+                    setTimeout(() => {
+                        updateerrorsocket("(Main Token) Solve DM Captcha!");
+                        process.exit(0);
+                    }, 1500);
+                } else {
+                    global.mainbanc = true;
+                    console.log(
+                        chalk.red(
+                            `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
+                        ) +
+                            chalk.magenta(" [Main Token]") +
+                            chalk.green(" DM Captcha Checked ✅")
+                    );
+
+                    setTimeout(() => {
+                        sleepy("Main", "Dm Captcha");
+                    }, 2000);
+                }
+            }
+        }
+    );
+}
+
+function dmextrabancheck(token, channelid) {
+    request.get(
+        {
+            headers: {
+                authorization: token,
+            },
+            url: `https://discord.com/api/v9/channels/${channelid}/messages?limit=1`,
+        },
+        function (error, response, body) {
+            var bod = JSON.parse(body);
+            if (bod[0] == undefined) {
+                dmprotectprouwu(token, channelid, "Extra Token");
+            } else {
+                var cont = bod[0].content;
+                if (
+                    cont.toLowerCase().includes("are you a real human?") ||
+                    cont
+                        .toLowerCase()
+                        .includes(
+                            "please complete your captcha to verify that you are human!"
+                        )
+                ) {
+                    global.extrabanc = false;
+                    console.clear();
+                    console.log(
+                        chalk.red(
+                            `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
+                        ) +
+                            chalk.magenta(" [Extra Token]") +
+                            chalk.red(" DM Captcha! ❌")
+                    );
+                    notifier.notify({
+                        title: "(Extra Token) Captcha Detected!",
+                        message: "Solve the captcha and restart the bot!",
+                        icon: "./utils/captcha.png",
+                        sound: true,
+                        wait: true,
+                        appID: "OwO Farm Bot",
+                    });
+
+                    setTimeout(() => {
+                        updateerrorsocket("(Extra Token) Solve DM Captcha!");
+                        process.exit(0);
+                    }, 1500);
+                } else {
+                    global.extrabanc = true;
+                    console.log(
+                        chalk.red(
+                            `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
+                        ) +
+                            chalk.magenta(" [Extra Token]") +
+                            chalk.green(" DM Captcha Checked ✅")
+                    );
+                    setTimeout(() => {
+                        sleepy("Extra", "DM Captcha");
+                    }, 2000);
+                }
+            }
+        }
+    );
+}
+
+function dmprotectprouwu(token, channelid, tokentype) {
+    typing(token, channelid);
+    request.post(
+        {
+            headers: {
+                authorization: token,
+                "super-x": autoseed(token),
+            },
+            url: `https://discord.com/api/v9/channels/${channelid}/messages`,
+            json: {
+                content: "hi bro",
+                nonce: nonce(),
+                tts: false,
+                flags: 0,
+            },
+        },
+        function (err, res, body) {
+            if (body) {
+                console.log(
+                    chalk.red(
+                        `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
+                    ) +
+                        chalk.magenta(` [${tokentype}]`) +
+                        chalk.red(" OwO dm channel id incorrect ❌")
+                );
+            }
+        }
+    );
+}
+
+function elaina2(token, channelid, phrasesFilePath) {
+    // Read the JSON
+    fs.readFile("./phrases/phrases.json", "utf8", (err, data) => {
+        if (err) {
+            console.error("Error reading JSON file:", err);
+            return;
+        }
+
+        // Parse the JSON data
+        try {
+            const phrasesObject = JSON.parse(data);
+            const phrases = phrasesObject.phrases;
+
+            if (!phrases || !phrases.length) {
+                console.log("Phrases array is undefined or empty.");
+                return;
+            }
+
+            let result = Math.floor(Math.random() * phrases.length);
+
+            var ilu = phrases[result];
+            //E <3
+            typing(token, channelid);
+            request.post({
+                headers: {
+                    authorization: token,
+                },
+                url: `https://discord.com/api/v9/channels/${channelid}/messages`,
+
+                json: {
+                    content: ilu,
+                    nonce: nonce(),
+                    tts: false,
+                    flags: 0,
+                },
+            });
+        } catch (error) {
+            console.error("Error parsing JSON:", error);
+        }
+    });
 }

@@ -1,7 +1,8 @@
 {
+    "windowssettings": { "controlcdetect": false },
     "settings": {
         "times": {
-            "enable": false,
+            "enable": true,
             "huntbottom": 16000,
             "hunttop": 32000,
             "battlebottom": 16000,
@@ -38,9 +39,10 @@
                 }
             }
         },
+        "prefix": "",
         "huntandbattle": true,
         "banbypass": true,
-        "discordrpc": true,
+        "discordrpc": false,
         "typingindicator": true,
         "pray": false,
         "curse": false,
@@ -80,8 +82,8 @@
         },
         "gamble": {
             "coinflip": {
-                "default_amount": 10,
-                "max_amount": 1000,
+                "default_amount": 1000,
+                "max_amount": 150000,
                 "multipler": 3,
                 "enable": false,
                 "amount": "1"

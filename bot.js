@@ -498,10 +498,10 @@ if (global.etoken) {
         }
         if (settings.huntandbattle) {
             // if (global.mainbanc) {
-            hunt(extratoken, timehunt, "Main Token", extrachannelid);
+            hunt(extratoken, timehunt, "Extra Token", extrachannelid);
             if (settings.inventory.inventorycheck) {
                 setTimeout(() => {
-                    checkinv(extratoken, extrachannelid, "Main Token");
+                    checkinv(extratoken, extrachannelid, "Extra Token");
                 }, 2500);
             }
             // }
@@ -510,7 +510,7 @@ if (global.etoken) {
                     bancheck(extratoken, extrachannelid);
                     dmbancheck(extratoken, owodmextrachannelid);
                 }
-                battle(extratoken, timebattle, "Main Token", extrachannelid);
+                battle(extratoken, timebattle, "Extra Token", extrachannelid);
             }, timebattle);
         }
     }, timehuntbattleinterval);

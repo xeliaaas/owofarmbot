@@ -493,8 +493,8 @@ if (global.etoken) {
         }
 
         if (settings.banbypass) {
-            bancheck(extratoken, extrachannelid);
-            dmbancheck(extratoken, owodmextrachannelid);
+            extrabancheck(extratoken, extrachannelid);
+            dmextrabancheck(extratoken, owodmextrachannelid);
         }
         if (settings.huntandbattle) {
             // if (global.mainbanc) {
@@ -507,8 +507,8 @@ if (global.etoken) {
             // }
             setTimeout(() => {
                 if (settings.banbypass) {
-                    bancheck(extratoken, extrachannelid);
-                    dmbancheck(extratoken, owodmextrachannelid);
+                    extrabancheck(extratoken, extrachannelid);
+                    dmextrabancheck(extratoken, owodmextrachannelid);
                 }
                 battle(extratoken, timebattle, "Extra Token", extrachannelid);
             }, timebattle);
@@ -531,8 +531,8 @@ if (settings.animals.enable) {
         animals(maintoken, "Main Token", mainchannelid, settings.animals.type);
         if (global.etoken) {
             if (settings.banbypass) {
-                bancheck(maintoken, mainchannelid);
-                dmbancheck(maintoken, owodmmainchannelid);
+                extrabancheck(extratoken, extrachannelid);
+                dmextrabancheck(extratoken, owodmextrachannelid);
             }
             animals(
                 extratoken,
@@ -559,8 +559,8 @@ if (settings.pray) {
         pray(maintoken, "Main Token", mainchannelid);
         if (global.etoken) {
             if (settings.banbypass) {
-                bancheck(maintoken, mainchannelid);
-                dmbancheck(maintoken, owodmmainchannelid);
+                extrabancheck(extratoken, extrachannelid);
+                dmextrabancheck(extratoken, owodmextrachannelid);
             }
             pray(extratoken, "Extra Token", extrachannelid);
         }
@@ -581,8 +581,8 @@ if (settings.curse) {
         curse(maintoken, "Main Token", mainchannelid);
         if (global.etoken) {
             if (settings.banbypass) {
-                bancheck(maintoken, mainchannelid);
-                dmbancheck(maintoken, owodmmainchannelid);
+                extrabancheck(extratoken, extrachannelid);
+                dmextrabancheck(extratoken, owodmextrachannelid);
             }
             curse(extratoken, "Extra Token", extrachannelid);
         }
@@ -603,8 +603,8 @@ if (settings.upgradeautohunt.enable) {
         upgradeall(maintoken, "Main Token", mainchannelid);
         if (global.etoken) {
             if (settings.banbypass) {
-                bancheck(maintoken, mainchannelid);
-                dmbancheck(maintoken, owodmmainchannelid);
+                extrabancheck(extratoken, extrachannelid);
+                dmextrabancheck(extratoken, owodmextrachannelid);
             }
             upgradeall(extratoken, "Extra Token", extrachannelid);
         }
@@ -630,8 +630,8 @@ if (settings.gamble.coinflip.enable) {
         coinflip(maintoken, "Main Token", maingamblechannelid);
         if (global.etoken) {
             if (settings.banbypass) {
-                bancheck(maintoken, mainchannelid);
-                dmbancheck(maintoken, owodmmainchannelid);
+                extrabancheck(extratoken, extrachannelid);
+                dmextrabancheck(extratoken, owodmextrachannelid);
             }
             extra_coinflip(extratoken, "Extra Token", extragamblechannelid);
         }
@@ -647,8 +647,8 @@ if (settings.gamble.slots.enable) {
         slots(maintoken, "Main Token", maingamblechannelid);
         if (global.etoken) {
             if (settings.banbypass) {
-                bancheck(maintoken, mainchannelid);
-                dmbancheck(maintoken, owodmmainchannelid);
+                extrabancheck(extratoken, extrachannelid);
+                dmextrabancheck(extratoken, owodmextrachannelid);
             }
             slots(extratoken, "Extra Token", extragamblechannelid);
         }

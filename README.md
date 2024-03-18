@@ -11,6 +11,7 @@ If you make a video about using the farmbot, upload it to YouTube with the hasht
 <a href="https://github.com/Mid0aria/owofarmbot"><img src="https://img.shields.io/github/last-commit/mid0aria/owofarmbot" /></a><br>
 Tutorial needed? <a href="https://youtu.be/sso05qx8Hac">Click Here</a><br>
 Tutorial 2 (replit) <a href="https://www.youtube.com/watch?v=tiSd99NEhb4">Click Here</a> (Thanks Hiếu LoneLy)<br>
+Tutorial 3 (TERMUX) <a href="https://www.youtube.com/watch?v=78XrZgDtEXU">Click Here</a> (Thanks OwO Sever)<br>
 Do you need help? <a href ="https://discord.gg/WzYXVbXt6C">Join Discord Server</a>
 
 </p>
@@ -263,3 +264,4 @@ Le-Khuong <a href="https://github.com/Le-Khuong">(Github)</a><br>
 mallusrgreatv2 <a href="https://github.com/mallusrgreatv2">(Github)</a><br>
 
 Hiếu LoneLy <a href="https://www.youtube.com/watch?v=tiSd99NEhb4">(Youtube)</a>
+OwO Sever <a href="https://www.youtube.com/watch?v=78XrZgDtEXU">(Youtube)</a>
